@@ -1,0 +1,24 @@
+{
+	"manifest_version": 2,
+	"name": "Anime Logger",
+	"version": "1.0",
+	"description": "No description yet",
+	"icons": {
+		"48": "icons/icon.png"
+	},
+	"background": {
+		"scripts": [
+			"background-script.js"
+		]
+	},
+	"permissions": [
+		"<all_urls>",
+		"tabs",
+		"activeTab",
+		"webNavigation",
+		"storage"
+	],
+	"options_ui": {
+		"page": "settings.html"
+	}
+}
