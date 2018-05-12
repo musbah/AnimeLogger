@@ -16,7 +16,8 @@
 		"tabs",
 		"activeTab",
 		"webNavigation",
-		"storage"
+		"storage",
+		"unlimitedStorage"
 	],
 	"options_ui": {
 		"page": "settings.html"
