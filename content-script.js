@@ -20,6 +20,12 @@ const state = {
 	animeName: "",
 	animeEpisode: "",
 
+	savedAnimeName: "",
+	savedAnimeEpisode: "",
+
+	addAnime: "none",
+	updateAnime: "none",
+
 	notConfigured: "none",
 	configure: "none",
 	configured: "none"
@@ -43,14 +49,19 @@ const actions = {
 	},
 	move: ({ x, y }) => state => state.dragging && { x, y },
 	saveConfig: () => state => {
+
 		var formattedTitle = document.title.replace(state.inputAnime, "%s");
 		while (formattedTitle.indexOf(state.inputAnime) >= 0) {
 			formattedTitle = formattedTitle.replace(state.inputAnime, ".+");
 		}
 
-		formattedTitle = formattedTitle.replace(state.inputEpisode, numRegex);
+		//doing it this way because the regex contains numbers which could mess with indexOf
 		while (formattedTitle.indexOf(state.inputEpisode) >= 0) {
-			formattedTitle = formattedTitle.replace(state.inputEpisode, numRegex);
+			formattedTitle = formattedTitle.replace(state.inputEpisode, "%d");
+		}
+
+		while (formattedTitle.indexOf("%d") >= 0) {
+			formattedTitle = formattedTitle.replace("%d", numRegex);
 		}
 
 		var objToSet = {};
@@ -59,7 +70,8 @@ const actions = {
 		browser.storage.local.set(objToSet);
 
 		var animeInfo = loadAnimeInfo(objToSet[host].formattedTitle);
-		return { configured: "block", configure: "none", animeName: animeInfo.name, animeEpisode: animeInfo.episode };
+
+		return { configured: "block", configure: "none", animeName: animeInfo.name, animeEpisode: animeInfo.episode, addAnime: "block" };
 	},
 	stateAssign: data => Object.assign({}, data)
 };
@@ -89,7 +101,13 @@ const view = (state, actions) =>
 		]),
 		h("div", { style: { display: state.configured } }, [
 			"name:" + state.animeName, h("br"),
-			"episode:" + state.animeEpisode
+			"episode:" + state.animeEpisode, h("br"),
+			h("div", { style: { display: state.addAnime } }, [
+				h("button", { onclick: () => actions.addAnime() }, "add")
+			]),
+			h("div", { style: { display: state.updateAnime } }, [
+				h("button", { onclick: () => actions.updateAnime() }, "update")
+			])
 		])
 	);
 
