@@ -20,7 +20,6 @@ const state = {
 	animeName: "",
 	animeEpisode: "",
 
-	savedAnimeName: "",
 	savedAnimeEpisode: "",
 
 	addAnime: "none",
@@ -73,6 +72,20 @@ const actions = {
 
 		return { configured: "block", configure: "none", animeName: animeInfo.name, animeEpisode: animeInfo.episode, addAnime: "block" };
 	},
+	addOrUpdateAnime: () => state => {
+
+		var anime = {};
+		anime[state.animeName] = { episode: state.animeEpisode };
+
+		browser.storage.local.set(anime);
+
+		if (state.addAnime == "block") {
+			return { addAnime: "none" };
+		} else if (state.updateAnime == "block") {
+			return { updateAnime: "none" };
+		}
+
+	},
 	stateAssign: data => Object.assign({}, data)
 };
 
@@ -101,12 +114,17 @@ const view = (state, actions) =>
 		]),
 		h("div", { style: { display: state.configured } }, [
 			"name:" + state.animeName, h("br"),
+
+			h("div", { style: { display: state.updateAnime } }, [
+				"saved episode:" + state.savedAnimeEpisode, h("br"),
+			]),
+
 			"episode:" + state.animeEpisode, h("br"),
 			h("div", { style: { display: state.addAnime } }, [
-				h("button", { onclick: () => actions.addAnime() }, "add")
+				h("button", { onclick: () => actions.addOrUpdateAnime() }, "add")
 			]),
 			h("div", { style: { display: state.updateAnime } }, [
-				h("button", { onclick: () => actions.updateAnime() }, "update")
+				h("button", { onclick: () => actions.addOrUpdateAnime() }, "update")
 			])
 		])
 	);
@@ -120,7 +138,31 @@ function getSiteDetails(hyper) {
 		if (site[host] != undefined && site[host].isConfigured) {
 			console.log("site configured");
 			var animeInfo = loadAnimeInfo(site[host].formattedTitle);
-			hyper.stateAssign({ animeName: animeInfo.name, animeEpisode: animeInfo.episode, configured: "block" });
+
+			var gettingSavedAnime = browser.storage.local.get(animeInfo.name);
+			gettingSavedAnime.then(function (anime) {
+
+				console.log("got anime info");
+
+				var savedAnimeEpisode = -1;
+				if (anime[animeInfo.name] != undefined) {
+					savedAnimeEpisode = anime[animeInfo.name].episode;
+				}
+
+				var addAnime = "none";
+				var updateAnime = "none";
+				if (savedAnimeEpisode > -1) {
+					updateAnime = "block";
+				} else {
+					addAnime = "block";
+				}
+
+				hyper.stateAssign({ animeName: animeInfo.name, animeEpisode: animeInfo.episode, configured: "block", savedAnimeEpisode: savedAnimeEpisode, addAnime: addAnime, updateAnime: updateAnime });
+
+			}, function (error) {
+				console.log("could not get anime information," + error);
+			});
+
 		} else {
 			console.log("site not configured");
 			hyper.stateAssign({ notConfigured: "block" });
