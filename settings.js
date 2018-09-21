@@ -26,11 +26,14 @@ function saveOptions(e) {
 	e.preventDefault();
 
 	var newUrl = document.getElementById("url").value;
-	animeURLs.push(newUrl);
+
+	var hostname = getHostName(newUrl);
+
+	animeURLs.push(hostname);
 	browser.storage.local.set({
 		urls: animeURLs
 	});
-	addListElements([newUrl]);
+	addListElements([hostname]);
 }
 
 function addListElements(urlArray) {
@@ -41,6 +44,16 @@ function addListElements(urlArray) {
 		list.appendChild(li);
 	}
 
+}
+
+
+function getHostName(url) {
+
+	url = url.replace("https://", "");
+	url = url.replace("http://", "");
+	url = url.replace(/^(www\.)/, "");
+
+	return url;
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);

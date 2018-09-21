@@ -30,8 +30,8 @@ function loadSettingsAndAddListener() {
 		if (result.urls != undefined) {
 			filter.url = [];
 			for (var i = 0; i < result.urls.length; i++) {
-				var urlObject = { hostEquals: result.urls[i] };
-				filter.url.push(urlObject);
+				filter.url.push({ hostEquals: result.urls[i] });
+				filter.url.push({ hostEquals: "www." + result.urls[i] });
 			}
 
 			console.log("loaded settings");
