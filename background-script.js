@@ -22,7 +22,11 @@ var filter = {
 	url: []
 };
 
-function loadSettingsAndAddListener() {
+function loadSettingsAndAddListener(changes) {
+
+	if (changes != undefined && changes["urls"] == undefined) {
+		return;
+	}
 
 	var getting = browser.storage.local.get("urls");
 	getting.then(function (result) {
@@ -45,5 +49,5 @@ function loadSettingsAndAddListener() {
 	});
 }
 
-loadSettingsAndAddListener();
+loadSettingsAndAddListener(undefined);
 browser.storage.onChanged.addListener(loadSettingsAndAddListener);

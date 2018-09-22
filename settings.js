@@ -27,7 +27,18 @@ function saveOptions(e) {
 
 	var newUrl = document.getElementById("url").value;
 
+	if (newUrl == "") {
+		return;
+	}
+
 	var hostname = getHostName(newUrl);
+
+	for (var i = 0; i < animeURLs.length; i++) {
+		if (animeURLs[i] == hostname) {
+			alert("This site has already been saved");
+			return;
+		}
+	}
 
 	animeURLs.push(hostname);
 	browser.storage.local.set({

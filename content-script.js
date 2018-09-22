@@ -31,7 +31,27 @@ const state = {
 };
 
 const actions = {
-	drop: () => ({ dragging: false }),
+	drop: e => state => {
+
+		if (e.target.tagName != "BUTTON" && e.target.tagName != "INPUT") {
+			var getting = browser.storage.local.get(host);
+			getting.then(function (site) {
+
+				if (site[host] == undefined) {
+					site[host] = {};
+				}
+
+				site[host]["x"] = state.x;
+				site[host]["y"] = state.y;
+				site[host]["offsetX"] = state.offsetX;
+				site[host]["offsetY"] = state.offsetY;
+
+				browser.storage.local.set(site);
+			});
+		}
+
+		return { dragging: false };
+	},
 	grab: e => {
 
 		if (e.target.tagName != "BUTTON" && e.target.tagName != "INPUT") {
@@ -64,7 +84,7 @@ const actions = {
 		}
 
 		var objToSet = {};
-		objToSet[host] = { formattedTitle: formattedTitle, isConfigured: true };
+		objToSet[host] = { formattedTitle: formattedTitle, isConfigured: true, x: state.x, y: state.y, offsetX: state.offsetX, offsetY: state.offsetY };
 
 		browser.storage.local.set(objToSet);
 
@@ -157,7 +177,7 @@ function getSiteDetails(hyper) {
 					addAnime = "block";
 				}
 
-				hyper.stateAssign({ animeName: animeInfo.name, animeEpisode: animeInfo.episode, configured: "block", savedAnimeEpisode: savedAnimeEpisode, addAnime: addAnime, updateAnime: updateAnime });
+				hyper.stateAssign({ animeName: animeInfo.name, animeEpisode: animeInfo.episode, configured: "block", savedAnimeEpisode: savedAnimeEpisode, addAnime: addAnime, updateAnime: updateAnime, x: site[host].x, y: site[host].y, offsetX: site[host].offsetX, offsetY: site[host].offsetY });
 
 			}, function (error) {
 				console.log("could not get anime information," + error);
@@ -231,7 +251,7 @@ if (!window.loaded) {
 	document.body.appendChild(div);
 
 	const hyper = app(state, actions, view, div);
-	addEventListener("mouseup", hyper.drop);
+	addEventListener("mouseup", e => hyper.drop(e));
 	addEventListener("mousemove", e => hyper.move({ x: e.pageX, y: e.pageY }));
 
 	getSiteDetails(hyper);
