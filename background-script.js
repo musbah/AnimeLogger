@@ -3,7 +3,7 @@ function onExecuted(result) {
 }
 
 function onError(error) {
-	console.log("Error:" + error);
+	console.error(error);
 }
 
 

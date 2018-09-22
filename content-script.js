@@ -33,7 +33,7 @@ const state = {
 const actions = {
 	drop: e => state => {
 
-		if (e.target.tagName != "BUTTON" && e.target.tagName != "INPUT") {
+		if (state.dragging && e.target.tagName != "BUTTON" && e.target.tagName != "INPUT") {
 			var getting = browser.storage.local.get(host);
 			getting.then(function (site) {
 
@@ -89,7 +89,6 @@ const actions = {
 		browser.storage.local.set(objToSet);
 
 		var animeInfo = loadAnimeInfo(objToSet[host].formattedTitle);
-
 		return { configured: "block", configure: "none", animeName: animeInfo.name, animeEpisode: animeInfo.episode, addAnime: "block" };
 	},
 	addOrUpdateAnime: () => state => {
@@ -157,7 +156,12 @@ function getSiteDetails(hyper) {
 
 		if (site[host] != undefined && site[host].isConfigured) {
 			console.log("site configured");
+
 			var animeInfo = loadAnimeInfo(site[host].formattedTitle);
+
+			if (animeInfo == null) {
+				return;
+			}
 
 			var gettingSavedAnime = browser.storage.local.get(animeInfo.name);
 			gettingSavedAnime.then(function (anime) {
@@ -185,7 +189,17 @@ function getSiteDetails(hyper) {
 
 		} else {
 			console.log("site not configured");
-			hyper.stateAssign({ notConfigured: "block" });
+
+			var tempState = { notConfigured: "block" };
+
+			if (site[host] != undefined) {
+				tempState["x"] = site[host].x;
+				tempState["y"] = site[host].y;
+				tempState["offsetX"] = site[host].offsetX;
+				tempState["offsetY"] = site[host].offsetY;
+			}
+
+			hyper.stateAssign(tempState);
 		}
 
 
@@ -211,7 +225,7 @@ function loadAnimeInfo(formattedTitle) {
 		startIndex = matchBeg.index;
 	} else {
 		console.log("no match");
-		return;
+		return null;
 	}
 
 	var matchEnd = RegExp(splitTitle[1], "g").exec(documentTitle);
@@ -220,7 +234,7 @@ function loadAnimeInfo(formattedTitle) {
 		endIndex = matchEnd.index;
 	} else {
 		console.log("no match");
-		return;
+		return null;
 	}
 
 	var animeName = documentTitle.substring(startIndex, endIndex);
