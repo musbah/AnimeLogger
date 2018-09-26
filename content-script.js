@@ -99,11 +99,15 @@ const actions = {
 		browser.storage.local.set(anime);
 
 		if (state.addAnime == "block") {
-			return { addAnime: "none" };
+			return { addAnime: "none", updateAnime: "block", savedAnimeEpisode: state.animeEpisode };
 		} else if (state.updateAnime == "block") {
 			return { updateAnime: "none" };
 		}
 
+	},
+	deleteAnime: () => state => {
+		browser.storage.local.remove(state.animeName);
+		return { addAnime: "block", updateAnime: "none", savedAnimeEpisode: "" };
 	},
 	stateAssign: data => Object.assign({}, data)
 };
@@ -143,7 +147,8 @@ const view = (state, actions) =>
 				h("button", { onclick: () => actions.addOrUpdateAnime() }, "add")
 			]),
 			h("div", { style: { display: state.updateAnime } }, [
-				h("button", { onclick: () => actions.addOrUpdateAnime() }, "update")
+				h("button", { onclick: () => actions.addOrUpdateAnime() }, "update"),
+				h("button", { onclick: () => actions.deleteAnime() }, "delete")
 			])
 		])
 	);
