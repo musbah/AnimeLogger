@@ -60,9 +60,14 @@ function addListElements(urlArray) {
 
 function getHostName(url) {
 
+	url = url.trim();
 	url = url.replace("https://", "");
 	url = url.replace("http://", "");
 	url = url.replace(/^(www\.)/, "");
+
+	if (url.substr(url.length - 1) == "/") {
+		url = url.substr(0, url.length - 1);
+	}
 
 	return url;
 }

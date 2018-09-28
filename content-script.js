@@ -118,7 +118,7 @@ const view = (state, actions) =>
 		style: {
 			height: "100px",
 			backgroundColor: "white",
-			zIndex: "10",
+			zIndex: "100",
 			position: "absolute",
 			left: state.x - state.offsetX + "px",
 			top: state.y - state.offsetY + "px",
