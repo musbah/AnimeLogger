@@ -90,14 +90,18 @@ const actions = {
 	addOrUpdateAnime: () => state => {
 
 		var anime = {};
-		anime[state.animeName] = { episode: state.animeEpisode };
+
+		var episode = state.savedAnimeEpisode;
+		if (state.addAnime == "block") {
+			episode = state.animeEpisode;
+		}
+
+		anime[state.animeName] = { episode: episode };
 
 		browser.storage.local.set(anime);
 
 		if (state.addAnime == "block") {
 			return { addAnime: "none", updateAnime: "block", savedAnimeEpisode: state.animeEpisode };
-		} else if (state.updateAnime == "block") {
-			return { updateAnime: "none" };
 		}
 
 	},
@@ -135,7 +139,11 @@ const view = (state, actions) =>
 			"name:" + state.animeName, h("br"),
 
 			h("div", { style: { display: state.updateAnime } }, [
-				"saved episode:" + state.savedAnimeEpisode, h("br"),
+				"saved episode:",
+				h("button", { onclick: () => actions.stateAssign({ savedAnimeEpisode: parseInt(state.savedAnimeEpisode) - 1 }) }, "-"),
+				state.savedAnimeEpisode,
+				h("button", { onclick: () => actions.stateAssign({ savedAnimeEpisode: parseInt(state.savedAnimeEpisode) + 1 }) }, "+"),
+				h("br")
 			]),
 
 			"episode:" + state.animeEpisode, h("br"),
