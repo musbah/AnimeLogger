@@ -92,7 +92,7 @@ const actions = {
 		var anime = {};
 		var episode = state.animeEpisode;
 
-		anime[state.animeName] = { episode: episode };
+		anime[state.animeName] = { episode: episode, url: window.location.href };
 
 		browser.storage.local.set(anime);
 
