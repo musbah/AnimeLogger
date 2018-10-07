@@ -90,18 +90,16 @@ const actions = {
 	addOrUpdateAnime: () => state => {
 
 		var anime = {};
-
-		var episode = state.savedAnimeEpisode;
-		if (state.addAnime == "block") {
-			episode = state.animeEpisode;
-		}
+		var episode = state.animeEpisode;
 
 		anime[state.animeName] = { episode: episode };
 
 		browser.storage.local.set(anime);
 
 		if (state.addAnime == "block") {
-			return { addAnime: "none", updateAnime: "block", savedAnimeEpisode: state.animeEpisode };
+			return { addAnime: "none", updateAnime: "block", savedAnimeEpisode: episode };
+		} else {
+			return { savedAnimeEpisode: episode };
 		}
 
 	},
@@ -139,14 +137,14 @@ const view = (state, actions) =>
 			"name:" + state.animeName, h("br"),
 
 			h("div", { style: { display: state.updateAnime } }, [
-				"saved episode:",
-				h("button", { onclick: () => actions.stateAssign({ savedAnimeEpisode: parseInt(state.savedAnimeEpisode) - 1 }) }, "-"),
-				state.savedAnimeEpisode,
-				h("button", { onclick: () => actions.stateAssign({ savedAnimeEpisode: parseInt(state.savedAnimeEpisode) + 1 }) }, "+"),
-				h("br")
+				"saved episode:" + state.savedAnimeEpisode, h("br")
 			]),
 
-			"episode:" + state.animeEpisode, h("br"),
+			"episode:",
+			h("button", { onclick: () => actions.stateAssign({ animeEpisode: parseInt(state.animeEpisode) - 1 }) }, "-"),
+			state.animeEpisode,
+			h("button", { onclick: () => actions.stateAssign({ animeEpisode: parseInt(state.animeEpisode) + 1 }) }, "+"),
+			h("br"),
 			h("div", { style: { display: state.addAnime } }, [
 				h("button", { onclick: () => actions.addOrUpdateAnime() }, "add")
 			]),
