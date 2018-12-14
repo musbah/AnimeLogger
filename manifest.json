@@ -8,7 +8,7 @@
 	},
 	"background": {
 		"scripts": [
-			"background-script.js"
+			"/src/background-script.js"
 		]
 	},
 	"permissions": [
@@ -20,7 +20,7 @@
 		"unlimitedStorage"
 	],
 	"options_ui": {
-		"page": "settings.html"
+		"page": "/src/settings.html"
 	},
 	"browser_action": {
 		"browser_style": true,
@@ -29,6 +29,6 @@
 			"32": "icons/icon.png"
 		},
 		"default_title": "Anime Logger",
-		"default_popup": "popup.html"
+		"default_popup": "/src/popup.html"
 	}
 }

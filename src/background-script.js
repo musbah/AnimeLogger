@@ -11,11 +11,10 @@ function pageNavigation(details) {
 	console.log("navigated to: " + details.url);
 
 	var executing = browser.tabs.executeScript({
-		file: "/content-script.js"
+		file: "/src/content-script.js"
 	});
 
 	executing.then(onExecuted, onError);
-
 }
 
 var filter = {
