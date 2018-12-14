@@ -1,4 +1,4 @@
-var list = document.getElementById("list");
+var list = document.getElementById("popupList");
 
 function addListElements(array) {
 

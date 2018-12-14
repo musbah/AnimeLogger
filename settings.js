@@ -1,6 +1,6 @@
 
 var animeURLs;
-var list = document.getElementById("list");
+var list = document.getElementById("settingsList");
 
 function restoreOptions() {
 
