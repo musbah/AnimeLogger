@@ -1,6 +1,6 @@
 ul {
 	list-style-type: none;
-	width: 200px;
+	width: 500px;
 	margin: 0;
 	padding: 0;
 }
@@ -15,4 +15,9 @@ ul {
 	border-bottom-width: 1px;
 	border-bottom-color: rgb(163, 154, 154);
 	padding-left: 10px;
+}
+
+.deleteButton {
+	float: right;
+	margin-top: 5px;
 }

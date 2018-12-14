@@ -51,12 +51,36 @@ function addListElements(urlArray) {
 
 	for (var i = 0; i < urlArray.length; i++) {
 		var li = document.createElement("li");
-		li.textContent = urlArray[i];
+		li.innerText = urlArray[i];
+
+		var button = document.createElement("button");
+		button.innerText = "delete";
+		button.className = "deleteButton";
+
+		button.addEventListener("click", deleteURL);
+
+		li.appendChild(button);
+
 		list.appendChild(li);
 	}
 
 }
 
+function deleteURL(e) {
+	e.preventDefault();
+
+	var liElement = e.target.parentNode;
+	var split = liElement.innerText.split("\n");
+
+	var index = animeURLs.indexOf(split[0]);
+
+	animeURLs.splice(index, 1);
+	browser.storage.local.set({
+		urls: animeURLs
+	});
+
+	liElement.parentNode.removeChild(liElement);
+}
 
 function getHostName(url) {
 
@@ -73,4 +97,4 @@ function getHostName(url) {
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
-document.getElementById("form").addEventListener("submit", saveOptions);
+document.getElementById("saveButton").addEventListener("click", saveOptions);
