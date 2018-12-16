@@ -1,3 +1,4 @@
 .eslintrc.json
 node_modules
 .vscode
+web-ext-artifacts
