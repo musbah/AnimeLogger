@@ -4,7 +4,7 @@
 	"version": "1.0",
 	"description": "No description yet",
 	"icons": {
-		"48": "icons/icon.png"
+		"32": "icons/icon.png"
 	},
 	"background": {
 		"scripts": [
