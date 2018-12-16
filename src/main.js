@@ -23,7 +23,9 @@ const state = {
 
 	notConfigured: "none",
 	configure: "none",
-	configured: "none"
+	configured: "none",
+
+	divDisplay: "none"
 };
 
 const actions = {
@@ -125,7 +127,7 @@ const view = (state, actions) =>
 			position: "absolute",
 			left: state.x - state.offsetX + "px",
 			top: state.y - state.offsetY + "px",
-			display: "block"
+			display: state.divDisplay,
 		}, onmousedown: (e) => actions.grab(e)
 	},
 		h("div", { style: { display: state.notConfigured } }, [
@@ -193,7 +195,7 @@ function getSiteDetails(hyper) {
 					addAnime = "block";
 				}
 
-				hyper.stateAssign({ animeName: animeInfo.name, animeEpisode: animeInfo.episode, configured: "block", savedAnimeEpisode: savedAnimeEpisode, addAnime: addAnime, updateAnime: updateAnime, x: site[host].x, y: site[host].y, offsetX: site[host].offsetX, offsetY: site[host].offsetY });
+				hyper.stateAssign({ divDisplay: "block", animeName: animeInfo.name, animeEpisode: animeInfo.episode, configured: "block", savedAnimeEpisode: savedAnimeEpisode, addAnime: addAnime, updateAnime: updateAnime, x: site[host].x, y: site[host].y, offsetX: site[host].offsetX, offsetY: site[host].offsetY });
 
 			}, function (error) {
 				console.log("could not get anime information," + error);
@@ -202,7 +204,7 @@ function getSiteDetails(hyper) {
 		} else {
 			console.log("site not configured");
 
-			var tempState = { notConfigured: "block" };
+			var tempState = { divDisplay: "block", notConfigured: "block" };
 
 			if (site[host] != undefined) {
 				tempState["x"] = site[host].x;
