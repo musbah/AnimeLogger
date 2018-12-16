@@ -120,6 +120,11 @@ const view = (state, actions) =>
 		style: {
 			height: "100px",
 			backgroundColor: "white",
+			color: "black",
+			"font-size": "13px",
+			"font-family": "Arial,Helvetica Neue,Helvetica,sans-serif",
+			border: "1px solid black",
+			padding: "3px",
 			zIndex: "100",
 			position: "absolute",
 			left: state.x - state.offsetX + "px",
