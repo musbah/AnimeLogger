@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Anime Logger",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "No description yet",
 	"icons": {
 		"32": "icons/icon.png",
