@@ -4,7 +4,8 @@
 	"version": "1.0",
 	"description": "No description yet",
 	"icons": {
-		"32": "icons/icon.png"
+		"32": "icons/icon.png",
+		"120": "icons/icon-120.png"
 	},
 	"background": {
 		"scripts": [
@@ -26,7 +27,8 @@
 		"browser_style": true,
 		"default_icon": {
 			"16": "icons/icon.png",
-			"32": "icons/icon.png"
+			"32": "icons/icon.png",
+			"120": "icons/icon-120.png"
 		},
 		"default_title": "Anime Logger",
 		"default_popup": "/src/popup.html"
