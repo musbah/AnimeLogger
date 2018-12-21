@@ -11,7 +11,7 @@ function pageNavigation(details) {
 	console.log("navigated to: " + details.url);
 
 	var executing = browser.tabs.executeScript({
-		file: "/src/content-script.js"
+		file: "/src/generated-content-script.js"
 	});
 
 	executing.then(onExecuted, onError);

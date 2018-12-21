@@ -1,1 +1,2 @@
-src/content-script.js
+src/generated-content-script.js
+src/generated-popup.js

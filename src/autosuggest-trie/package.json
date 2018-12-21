@@ -1,0 +1,113 @@
+{
+  "_from": "autosuggest-trie",
+  "_id": "autosuggest-trie@2.1.1",
+  "_inBundle": false,
+  "_integrity": "sha1-+SxIB87vYy3vRCTML3kKDM3Br3s=",
+  "_location": "/autosuggest-trie",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "autosuggest-trie",
+    "name": "autosuggest-trie",
+    "escapedName": "autosuggest-trie",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/autosuggest-trie/-/autosuggest-trie-2.1.1.tgz",
+  "_shasum": "f92c4807ceef632def4424cc2f790a0ccdc1af7b",
+  "_spec": "autosuggest-trie",
+  "_where": "D:\\Musbah\\Documents\\Projects\\webextention addons\\anime logger",
+  "author": {
+    "name": "Misha Moroshko",
+    "email": "michael.moroshko@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/moroshko/autosuggest-trie/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Minimalistic trie implementation for autosuggest and autocomplete components.",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "eslint-plugin-mocha": "^4.9.0",
+    "husky": "^0.13.3",
+    "lint-staged": "^3.4.0",
+    "mocha": "^3.3.0",
+    "nyc": "^10.2.0",
+    "prettier": "^1.2.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/moroshko/autosuggest-trie#readme",
+  "keywords": [
+    "autosuggest",
+    "autocomplete",
+    "auto suggest",
+    "auto complete",
+    "trie autosuggest",
+    "trie autocomplete",
+    "trie auto suggest",
+    "trie auto complete",
+    "autosuggest trie",
+    "autocomplete trie",
+    "auto suggest trie",
+    "auto complete trie"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "src/**/*.js": [
+      "npm run prettier",
+      "git add"
+    ]
+  },
+  "main": "dist/index.js",
+  "name": "autosuggest-trie",
+  "nyc": {
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "src/**/*.test.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "check-coverage": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moroshko/autosuggest-trie.git"
+  },
+  "scripts": {
+    "build": "npm run dist",
+    "dist": "rm -rf dist && mkdir dist && babel src -d dist --ignore *.test.js",
+    "lint": "eslint src",
+    "postversion": "git push && git push --tags",
+    "prebuild": "npm run lint && npm test",
+    "precommit": "lint-staged",
+    "prepublish": "npm run dist",
+    "prettier": "prettier --single-quote --write \"src/**/*.js\"",
+    "test": "nyc mocha \"src/**/*.test.js\""
+  },
+  "version": "2.1.1"
+}

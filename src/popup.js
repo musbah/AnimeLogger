@@ -1,4 +1,7 @@
+var createTrie = require("./autosuggest-trie");
+
 var list = document.getElementById("popupList");
+var searchInput = document.getElementById("search");
 
 function addListElements(array) {
 
@@ -9,6 +12,13 @@ function addListElements(array) {
 		list.appendChild(li);
 	}
 
+}
+
+function emptyList() {
+
+	while (list.firstChild) {
+		list.removeChild(list.firstChild);
+	}
 }
 
 function callback(url) {
@@ -28,16 +38,33 @@ function onError(error) {
 	console.log(`Error: ${error}`);
 }
 
+var trieAnimeTree;
+
 var gettingSavedAnime = browser.storage.local.get();
 gettingSavedAnime.then(function (anime) {
 
-	var array = [];
+	var animeList = [];
 	for (var animeInfo in anime) {
 		if (anime.hasOwnProperty(animeInfo) && anime[animeInfo]["episode"] != undefined) {
 			var text = animeInfo + " ep: " + anime[animeInfo]["episode"];
-			array.push({ text: text, url: anime[animeInfo]["url"] });
+			animeList.push({ text: text, url: anime[animeInfo]["url"] });
 		}
 	}
 
-	addListElements(array);
+	trieAnimeTree = createTrie(animeList, "text");
+	addListElements(animeList);
+});
+
+searchInput.addEventListener("input", function (e) {
+	var queryText = e.target.value;
+
+	var matches;
+	if (queryText == "") {
+		matches = trieAnimeTree.data;
+	} else {
+		matches = trieAnimeTree.getMatches(queryText);
+	}
+
+	emptyList();
+	addListElements(matches);
 });
