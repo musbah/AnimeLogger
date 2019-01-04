@@ -7,7 +7,7 @@ function addListElements(array) {
 
 	for (var i = 0; i < array.length; i++) {
 		var li = document.createElement("li");
-		li.textContent = array[i].text;
+		li.textContent = array[i].name + " ep: " + array[i].episode;
 		li.addEventListener("click", callback(array[i].url));
 		list.appendChild(li);
 	}
@@ -40,18 +40,13 @@ function onError(error) {
 
 var trieAnimeTree;
 
-var gettingSavedAnime = browser.storage.local.get();
-gettingSavedAnime.then(function (anime) {
+var gettingStorage = browser.storage.local.get();
+gettingStorage.then(function (storedInfo) {
 
-	var animeList = [];
-	for (var animeInfo in anime) {
-		if (anime.hasOwnProperty(animeInfo) && anime[animeInfo]["episode"] != undefined) {
-			var text = animeInfo + " ep: " + anime[animeInfo]["episode"];
-			animeList.push({ text: text, url: anime[animeInfo]["url"] });
-		}
-	}
+	// eslint-disable-next-line no-undef
+	var animeList = extractAnimeListFromStorageInfo(storedInfo);
 
-	trieAnimeTree = createTrie(animeList, "text");
+	trieAnimeTree = createTrie(animeList, "name");
 	addListElements(animeList);
 });
 

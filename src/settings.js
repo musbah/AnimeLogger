@@ -96,5 +96,33 @@ function getHostName(url) {
 	return url;
 }
 
+function exportAnimeList() {
+
+	var gettingStorage = browser.storage.local.get();
+	gettingStorage.then(function (storedInfo) {
+
+		// eslint-disable-next-line no-undef
+		var animeList = extractAnimeListFromStorageInfo(storedInfo);
+
+		var blob = new Blob([JSON.stringify(animeList)], { type: "application/json" });
+		var blobURL = URL.createObjectURL(blob);
+
+		var downloading = browser.downloads.download({
+			url: blobURL,
+			filename: "anime-logger-export",
+			saveAs: true
+		});
+
+		downloading.then(
+			function (item) {
+				console.log(`Started downloading: ${item}`);
+			},
+			function (error) {
+				console.log(`Download failed: ${error}`);
+			});
+	});
+}
+
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.getElementById("saveButton").addEventListener("click", saveOptions);
+document.getElementById("exportButton").addEventListener("click", exportAnimeList);
