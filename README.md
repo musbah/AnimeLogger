@@ -1,4 +1,4 @@
-# anime-logger
+# AnimeLogger
 A firefox web extension that helps you log the anime episode you're at while on a streaming site.
 
 This extension is still a work in progress. 
