@@ -245,7 +245,7 @@ function createNewTab(url) {
 }
 
 function onError(error) {
-	console.log(`Error: ${error}`);
+	console.error(`Error: ${error}`);
 }
 
 var trieAnimeTree;
@@ -273,4 +273,11 @@ searchInput.addEventListener("input", function (e) {
 	emptyList();
 	addListElements(matches);
 });
+
+document.getElementById("settings").addEventListener("click", function () {
+	browser.runtime.openOptionsPage().then(function () {
+		console.log("settings page is open");
+	}, onError);
+});
+
 },{"./autosuggest-trie":3}]},{},[5]);

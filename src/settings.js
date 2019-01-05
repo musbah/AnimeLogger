@@ -109,7 +109,7 @@ function exportAnimeList() {
 
 		var downloading = browser.downloads.download({
 			url: blobURL,
-			filename: "anime-logger-export",
+			filename: "anime-logger-export.json",
 			saveAs: true
 		});
 
@@ -123,6 +123,37 @@ function exportAnimeList() {
 	});
 }
 
+function importAnimeList() {
+
+	var file = this.files[0];
+	if (file) {
+		var reader = new FileReader();
+		reader.readAsText(file, "UTF-8");
+
+		reader.onload = function (e) {
+			var animeArray = JSON.parse(e.target.result);
+
+			var anime = {};
+			for (var i = 0; i < animeArray.length; i++) {
+				anime[animeArray[i].name] = { episode: animeArray[i].episode, url: animeArray[i].url };
+			}
+
+			console.log(anime);
+			browser.storage.local.set(anime);
+		};
+
+		reader.onerror = function () {
+			console.log("could not read file");
+		};
+	}
+}
+
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.getElementById("saveButton").addEventListener("click", saveOptions);
 document.getElementById("exportButton").addEventListener("click", exportAnimeList);
+
+var importInput = document.getElementById("importInput");
+importInput.addEventListener("change", importAnimeList);
+document.getElementById("importButton").addEventListener("click", function () {
+	importInput.click();
+});
