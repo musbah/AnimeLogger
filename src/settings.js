@@ -1,3 +1,4 @@
+import { extractAnimeListFromStorageInfo, log, onError } from "./common";
 
 var animeURLs;
 var list = document.getElementById("settingsList");
@@ -12,10 +13,6 @@ function restoreOptions() {
 			animeURLs = result.urls;
 			addListElements(animeURLs);
 		}
-	}
-
-	function onError(error) {
-		console.log(`Error: ${error}`);
 	}
 
 	var getting = browser.storage.local.get("urls");
@@ -101,7 +98,6 @@ function exportAnimeList() {
 	var gettingStorage = browser.storage.local.get();
 	gettingStorage.then(function (storedInfo) {
 
-		// eslint-disable-next-line no-undef
 		var animeList = extractAnimeListFromStorageInfo(storedInfo);
 
 		var blob = new Blob([JSON.stringify(animeList)], { type: "application/json" });
@@ -115,10 +111,10 @@ function exportAnimeList() {
 
 		downloading.then(
 			function (item) {
-				console.log(`Started downloading: ${item}`);
+				log(`Started downloading: ${item}`);
 			},
 			function (error) {
-				console.log(`Download failed: ${error}`);
+				log(`Download failed: ${error}`);
 			});
 	});
 }
@@ -138,13 +134,10 @@ function importAnimeList() {
 				anime[animeArray[i].name] = { episode: animeArray[i].episode, url: animeArray[i].url };
 			}
 
-			console.log(anime);
 			browser.storage.local.set(anime);
 		};
 
-		reader.onerror = function () {
-			console.log("could not read file");
-		};
+		reader.onerror = onError();
 	}
 }
 

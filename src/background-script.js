@@ -1,17 +1,14 @@
+import { log, onError } from "./common";
+
 function onExecuted(result) {
-	console.log("executed , result is " + result);
+	log("executed , result is " + result);
 }
-
-function onError(error) {
-	console.error(error);
-}
-
 
 function pageNavigation(details) {
-	console.log("navigated to: " + details.url);
+	log("navigated to: " + details.url);
 
 	var executing = browser.tabs.executeScript({
-		file: "/src/generated-content-script.js"
+		file: "/dist/content-script.js"
 	});
 
 	executing.then(onExecuted, onError);
@@ -37,14 +34,14 @@ function loadSettingsAndAddListener(changes) {
 				filter.url.push({ hostEquals: "www." + result.urls[i] });
 			}
 
-			console.log("loaded settings");
+			log("loaded settings");
 		}
 
 	}, onError).then(function () {
 		browser.webNavigation.onCommitted.removeListener(pageNavigation);
 		browser.webNavigation.onCommitted.addListener(pageNavigation, filter);
 
-		console.log("added webNavigation listener");
+		log("added webNavigation listener");
 	});
 }
 

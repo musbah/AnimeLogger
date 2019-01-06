@@ -1,5 +1,6 @@
-// eslint-disable-next-line no-unused-vars
-function extractAnimeListFromStorageInfo(storageInfo) {
+const debug = true;
+
+export function extractAnimeListFromStorageInfo(storageInfo) {
 
 	var animeList = [];
 	for (var animeInfo in storageInfo) {
@@ -9,4 +10,14 @@ function extractAnimeListFromStorageInfo(storageInfo) {
 	}
 
 	return animeList;
+}
+
+export function log(message) {
+	if (debug) {
+		console.log(message);
+	}
+}
+
+export function onError(error) {
+	console.error(`Error: ${error}`);
 }

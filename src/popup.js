@@ -1,3 +1,5 @@
+import { extractAnimeListFromStorageInfo, log, onError } from "./common";
+
 var createTrie = require("./autosuggest-trie");
 
 var list = document.getElementById("popupList");
@@ -34,16 +36,11 @@ function createNewTab(url) {
 	creating.then({}, onError);
 }
 
-function onError(error) {
-	console.error(`Error: ${error}`);
-}
-
 var trieAnimeTree;
 
 var gettingStorage = browser.storage.local.get();
 gettingStorage.then(function (storedInfo) {
 
-	// eslint-disable-next-line no-undef
 	var animeList = extractAnimeListFromStorageInfo(storedInfo);
 
 	trieAnimeTree = createTrie(animeList, "name");
@@ -66,6 +63,6 @@ searchInput.addEventListener("input", function (e) {
 
 document.getElementById("settings").addEventListener("click", function () {
 	browser.runtime.openOptionsPage().then(function () {
-		console.log("settings page is open");
+		log("settings page is open");
 	}, onError);
 });

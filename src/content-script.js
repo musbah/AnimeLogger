@@ -1,3 +1,5 @@
+import { log } from "./common";
+
 const { h, app } = require("hyperapp");
 
 const host = window.location.hostname;
@@ -166,10 +168,10 @@ function getSiteDetails(hyper) {
 	var getting = browser.storage.local.get(host);
 	getting.then(function (site) {
 
-		console.log("got site information");
+		log("got site information");
 
 		if (site[host] != undefined && site[host].isConfigured) {
-			console.log("site configured");
+			log("site configured");
 
 			var animeInfo = loadAnimeInfo(site[host].formattedTitle);
 
@@ -180,7 +182,7 @@ function getSiteDetails(hyper) {
 			var gettingSavedAnime = browser.storage.local.get(animeInfo.name);
 			gettingSavedAnime.then(function (anime) {
 
-				console.log("got anime info");
+				log("got anime info");
 
 				var savedAnimeEpisode = -1;
 				if (anime[animeInfo.name] != undefined) {
@@ -198,11 +200,11 @@ function getSiteDetails(hyper) {
 				hyper.stateAssign({ divDisplay: "block", animeName: animeInfo.name, animeEpisode: animeInfo.episode, configured: "block", savedAnimeEpisode: savedAnimeEpisode, addAnime: addAnime, updateAnime: updateAnime, x: site[host].x, y: site[host].y, offsetX: site[host].offsetX, offsetY: site[host].offsetY });
 
 			}, function (error) {
-				console.log("could not get anime information," + error);
+				log("could not get anime information," + error);
 			});
 
 		} else {
-			console.log("site not configured");
+			log("site not configured");
 
 			var tempState = { divDisplay: "block", notConfigured: "block" };
 
@@ -218,14 +220,14 @@ function getSiteDetails(hyper) {
 
 
 	}, function (error) {
-		console.log("could not get host information," + error);
+		log("could not get host information," + error);
 	});
 }
 
 
 function loadAnimeInfo(formattedTitle) {
 
-	console.log("load anime info");
+	log("load anime info");
 
 	var splitTitle = formattedTitle.split("%s");
 	var documentTitle = document.title;
@@ -235,19 +237,19 @@ function loadAnimeInfo(formattedTitle) {
 
 	var matchBeg = RegExp(splitTitle[0], "g").exec(documentTitle);
 	if (matchBeg) {
-		console.log("beginning match " + matchBeg.index);
+		log("beginning match " + matchBeg.index);
 		startIndex = matchBeg.index;
 	} else {
-		console.log("no match");
+		log("no match");
 		return null;
 	}
 
 	var matchEnd = RegExp(splitTitle[1], "g").exec(documentTitle);
 	if (matchEnd) {
-		console.log("ending match " + matchEnd.index);
+		log("ending match " + matchEnd.index);
 		endIndex = matchEnd.index;
 	} else {
-		console.log("no match");
+		log("no match");
 		return null;
 	}
 
@@ -272,7 +274,7 @@ function escapeRegExp(string) {
 }
 
 if (!window.loaded) {
-	console.log("loaded");
+	log("loaded");
 	window.loaded = true;
 
 	var div = document.createElement("div");
