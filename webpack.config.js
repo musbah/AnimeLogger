@@ -27,6 +27,12 @@ module.exports = {
 			filename: "settings.html",
 			template: "./src/settings.html"
 		}),
+		new HtmlWebpackPlugin({
+			inject: true,
+			chunks: ["helper"],
+			filename: "helper.html",
+			template: "./src/helper.html"
+		}),
 		new CopyWebpackPlugin([
 			{ from: "./src/styles.css", to: "styles.css" },
 		]),

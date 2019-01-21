@@ -45,5 +45,24 @@ function loadSettingsAndAddListener(changes) {
 	});
 }
 
+function handleInstalled(details) {
+
+	//Only needs to run the first time a user installs the extension
+	if (details.reason == "install") {
+
+		var windowData = {
+			type: "detached_panel",
+			url: "/dist/helper.html",
+			width: 250,
+			height: 100
+		};
+
+		browser.windows.create(windowData).then(function () {
+			log("new window was created");
+		}, onError);
+	}
+}
+
 loadSettingsAndAddListener(undefined);
 browser.storage.onChanged.addListener(loadSettingsAndAddListener);
+browser.runtime.onInstalled.addListener(handleInstalled);
