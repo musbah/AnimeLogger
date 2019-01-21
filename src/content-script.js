@@ -146,7 +146,7 @@ const view = (state, actions) =>
 			"name:" + state.animeName, h("br"),
 
 			h("div", { style: { display: state.updateAnime } }, [
-				"saved episode:" + state.savedAnimeEpisode, h("br")
+				"watched episode:" + state.savedAnimeEpisode, h("br")
 			]),
 
 			"episode:",
