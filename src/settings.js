@@ -37,11 +37,23 @@ function saveOptions(e) {
 		}
 	}
 
-	animeURLs.push(hostname);
-	browser.storage.local.set({
-		urls: animeURLs
-	});
-	addListElements([hostname]);
+	var permissionsToRequest = { origins: ["*://" + hostname + "/*", "*://www." + hostname + "/*"] };
+
+	browser.permissions.request(permissionsToRequest)
+		.then(function (response) {
+
+			if (response) {
+
+				animeURLs.push(hostname);
+				browser.storage.local.set({
+					urls: animeURLs
+				});
+				addListElements([hostname]);
+
+			} else {
+				log("permission denied");
+			}
+		});
 }
 
 function addListElements(urlArray) {

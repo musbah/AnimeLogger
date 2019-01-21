@@ -13,13 +13,13 @@
 		]
 	},
 	"permissions": [
-		"<all_urls>",
-		"tabs",
-		"activeTab",
 		"webNavigation",
 		"storage",
 		"unlimitedStorage",
 		"downloads"
+	],
+	"optional_permissions": [
+		"*://*/*"
 	],
 	"options_ui": {
 		"page": "/dist/settings.html"
