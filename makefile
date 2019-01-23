@@ -1,5 +1,9 @@
-run:
+windowsRun:
 	start web-ext run --firefox="D:\Program Files\Mozilla Firefox\firefox.exe"
+	npm run watch
+
+run:
+	web-ext run --firefox &
 	npm run watch
 
 build:

@@ -8,7 +8,8 @@ module.exports = {
 		"content-script": "./src/content-script.js",
 		"popup": "./src/popup.js",
 		"settings": "./src/settings.js",
-		"background-script": "./src/background-script.js"
+		"background-script": "./src/background-script.js",
+		"helper": "./src/helper.js"
 	},
 	output: {
 		path: path.join(__dirname, "dist"),
