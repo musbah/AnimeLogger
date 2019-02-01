@@ -53,8 +53,8 @@ function handleInstalled(details) {
 		var windowData = {
 			type: "detached_panel",
 			url: "/dist/helper.html",
-			width: 250,
-			height: 100
+			width: 400,
+			height: 400
 		};
 
 		browser.windows.create(windowData).then(function () {

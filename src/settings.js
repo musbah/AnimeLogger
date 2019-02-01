@@ -1,4 +1,4 @@
-import { extractAnimeListFromStorageInfo, log, onError } from "./common";
+import { extractAnimeListFromStorageInfo, log, onError, getHostName } from "./common";
 
 var animeURLs;
 var list = document.getElementById("settingsList");
@@ -89,20 +89,6 @@ function deleteURL(e) {
 	});
 
 	liElement.parentNode.removeChild(liElement);
-}
-
-function getHostName(url) {
-
-	url = url.trim();
-	url = url.replace("https://", "");
-	url = url.replace("http://", "");
-	url = url.replace(/^(www\.)/, "");
-
-	if (url.substr(url.length - 1) == "/") {
-		url = url.substr(0, url.length - 1);
-	}
-
-	return url;
 }
 
 function exportAnimeList() {
