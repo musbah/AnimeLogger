@@ -7,7 +7,7 @@ function onExecuted(result) {
 function pageNavigation(details) {
 	log("navigated to: " + details.url);
 
-	var executing = browser.tabs.executeScript({
+	var executing = browser.tabs.executeScript(details.tabId, {
 		file: "/dist/content-script.js"
 	});
 

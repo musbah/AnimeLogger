@@ -1,6 +1,6 @@
 {
   "name": "animelogger",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "A firefox web extension that helps you log the anime episode you're at while on a streaming site.",
   "dependencies": {
     "hyperapp": "^1.2.5"

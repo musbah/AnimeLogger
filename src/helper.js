@@ -11,28 +11,14 @@ const websites = {
 	}
 };
 
-var animeURLs;
-function loadURLs() {
-	var getting = browser.storage.local.get("urls");
-	getting.then(function (result) {
-
-		if (result.urls == undefined) {
-			animeURLs = [];
-		} else {
-			animeURLs = result.urls;
-		}
-	}, onError);
-}
-
 function addWebsites(e) {
 	e.preventDefault();
 
 	var checkedBoxes = document.getElementsByClassName("checkboxes");
 
-	var oldAnimeURLs = animeURLs;
-
 	var websitesToSet = {};
 	var permissionsToRequest = { origins: [] };
+	var animeURLs = [];
 
 	for (var i = 0; i < checkedBoxes.length; i++) {
 
@@ -41,41 +27,37 @@ function addWebsites(e) {
 
 			var hostname = getHostName(checkedBoxes[i].value);
 
-			var urlExists = false;
-			for (var y = 0; y < animeURLs.length; y++) {
-				if (animeURLs[y] == hostname) {
-					urlExists = true;
-					break;
-				}
-			}
-
-			if (!urlExists) {
-				animeURLs.push(hostname);
-				permissionsToRequest.origins.push("*://" + hostname + "/*", "*://www." + hostname + "/*");
-			}
-
+			animeURLs.push(hostname);
+			permissionsToRequest.origins.push("*://" + hostname + "/*", "*://www." + hostname + "/*");
 		}
 	}
 
 	browser.permissions.request(permissionsToRequest)
 		.then(function (response) {
 
-			if (response) {
+			var getting = browser.storage.local.get("urls");
+			getting.then(function (result) {
 
-				websitesToSet["urls"] = animeURLs;
-				browser.storage.local.set(websitesToSet);
+				var savedAnimeURLs = [];
+				if (result.urls != undefined) {
+					savedAnimeURLs = result.urls;
+				}
 
-			} else {
-				animeURLs = oldAnimeURLs;
-				log("permission denied");
-			}
+				savedAnimeURLs = savedAnimeURLs.concat(animeURLs);
 
-			window.close();
+				if (response) {
+
+					websitesToSet["urls"] = savedAnimeURLs;
+					browser.storage.local.set(websitesToSet);
+
+				} else {
+					log("permission denied");
+				}
+
+				window.close();
+
+			}, onError);
 		});
 }
 
-
-//Can't load urls on click because permissions.request isn't detected as in an input handler when in a promise
-document.addEventListener("DOMContentLoaded", loadURLs);
-browser.storage.onChanged.addListener(loadURLs);
 document.getElementById("addWebsiteButton").addEventListener("click", addWebsites);
