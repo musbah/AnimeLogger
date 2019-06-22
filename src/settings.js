@@ -81,6 +81,8 @@ function deleteURL(e) {
 	var liElement = e.target.parentNode;
 	var split = liElement.innerText.split("\n");
 
+	browser.storage.local.remove(split[0]);
+	
 	var index = animeURLs.indexOf(split[0]);
 
 	animeURLs.splice(index, 1);
