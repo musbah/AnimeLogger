@@ -4,10 +4,6 @@ const websites = {
 	"www.animerush.tv": {
 		formattedTitle: "%s Episode [0-9]+[.]{0,1}[0-9]* Subbed Online Free - AnimeRush",
 		isConfigured: true
-	},
-	"www.crunchyroll.com": {
-		formattedTitle: "%s Episode [0-9]+[.]{0,1}[0-9]* - Watch on Crunchyroll",
-		isConfigured: true
 	}
 };
 

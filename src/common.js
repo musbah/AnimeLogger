@@ -27,13 +27,7 @@ export function getHostName(url) {
 	try {
 		url = new URL(url);
 	} catch(error) {
-
-		try {
-			url = new URL("http://" + url);
-		} catch (error2) {
-			log(error2);
-			alert("Invalid URL");
-		}
+		url = new URL("http://" + url);
 	}
 
 	return url.hostname;

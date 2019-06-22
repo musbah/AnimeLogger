@@ -125,7 +125,7 @@ const view = (state, actions) =>
 			"font-family": "Arial,Helvetica Neue,Helvetica,sans-serif",
 			border: "1px solid black",
 			padding: "3px",
-			zIndex: "100",
+			zIndex: "99999",
 			position: "absolute",
 			left: state.x - state.offsetX + "px",
 			top: state.y - state.offsetY + "px",
