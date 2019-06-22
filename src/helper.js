@@ -28,7 +28,7 @@ function addWebsites(e) {
 			var hostname = getHostName(checkedBoxes[i].value);
 
 			animeURLs.push(hostname);
-			permissionsToRequest.origins.push("*://" + hostname + "/*", "*://www." + hostname + "/*");
+			permissionsToRequest.origins.push("*://" + hostname + "/*");
 		}
 	}
 

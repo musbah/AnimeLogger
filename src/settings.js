@@ -37,7 +37,7 @@ function saveOptions(e) {
 		}
 	}
 
-	var permissionsToRequest = { origins: ["*://" + hostname + "/*", "*://www." + hostname + "/*"] };
+	var permissionsToRequest = { origins: ["*://" + hostname + "/*"] };
 
 	browser.permissions.request(permissionsToRequest)
 		.then(function (response) {

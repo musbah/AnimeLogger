@@ -1,5 +1,5 @@
 windowsRun:
-	start web-ext run --firefox="D:\Program Files\Mozilla Firefox\firefox.exe"
+	start web-ext run --firefox="C:\Program Files\Mozilla Firefox\firefox.exe"
 	npm run watch
 
 run:

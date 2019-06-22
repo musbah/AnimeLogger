@@ -24,14 +24,17 @@ export function onError(error) {
 
 export function getHostName(url) {
 
-	url = url.trim();
-	url = url.replace("https://", "");
-	url = url.replace("http://", "");
-	url = url.replace(/^(www\.)/, "");
+	try {
+		url = new URL(url);
+	} catch(error) {
 
-	if (url.substr(url.length - 1) == "/") {
-		url = url.substr(0, url.length - 1);
+		try {
+			url = new URL("http://" + url);
+		} catch (error2) {
+			log(error2);
+			alert("Invalid URL");
+		}
 	}
 
-	return url;
+	return url.hostname;
 }

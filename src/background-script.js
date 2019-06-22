@@ -31,7 +31,6 @@ function loadSettingsAndAddListener(changes) {
 			filter.url = [];
 			for (var i = 0; i < result.urls.length; i++) {
 				filter.url.push({ hostEquals: result.urls[i] });
-				filter.url.push({ hostEquals: "www." + result.urls[i] });
 			}
 
 			log("loaded settings");
