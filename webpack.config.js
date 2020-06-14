@@ -34,9 +34,11 @@ module.exports = {
 			filename: "helper.html",
 			template: "./src/helper.html"
 		}),
-		new CopyWebpackPlugin([
-			{ from: "./src/styles.css", to: "styles.css" },
-		]),
+		new CopyWebpackPlugin({
+			patterns: [
+				{ from: "./src/styles.css", to: "styles.css" },
+			]
+		}),
 		new HtmlWebpackIncludeAssetsPlugin({
 			files: ["popup.html", "settings.html"],
 			assets: ["styles.css"],
