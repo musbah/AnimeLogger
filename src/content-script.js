@@ -1,3 +1,6 @@
+//TODO: Move to hyperapp2 or possibly something like vue
+//TODO: Refactor the code, very messy, can be much better
+
 import { log } from "./common";
 
 const { h, app } = require("hyperapp");
